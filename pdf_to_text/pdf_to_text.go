@@ -1,16 +1,19 @@
 package content_extraction
 
 import (
-	"fmt"
-	"os"
 	"log"
+	"os"
 	"regexp"
 
 	"github.com/unidoc/unidoc/pdf/extractor"
 	"github.com/unidoc/unidoc/pdf/model"
 )
 
-func HandleError(err error){if err != nil {log.Fatal(err)}}
+func HandleError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
 func WriteToFile(filename string, content string) {
 	f, err := os.Create(filename)
@@ -21,7 +24,7 @@ func WriteToFile(filename string, content string) {
 	HandleError(err)
 }
 
-func cleanText(content string) string {
+func CleanText(content string) string {
 	re := regexp.MustCompile("[^\\x00-\\x7F]+|\\n|\\t")
 	return re.ReplaceAllString(content, "")
 }
@@ -53,18 +56,18 @@ func ExtractTextFromPDF(path string) (string, error) {
 	return text, nil
 }
 
-func main() {
+// func main() {
 
-	// extract text from pdf
-	text, err := ExtractTextFromPDF("sample.pdf")
-	HandleError(err)
+// 	// extract text from pdf
+// 	text, err := ExtractTextFromPDF("sample.pdf")
+// 	HandleError(err)
 
-	// clean text
-	cleaned := cleanText(text)
+// 	// clean text
+// 	cleaned := cleanText(text)
 
-	// write cleaned text to new file
-	WriteToFile("cleaned.txt", cleaned)
+// 	// write cleaned text to new file
+// 	WriteToFile("cleaned.txt", cleaned)
 
-	fmt.Println("Text cleaned and written to cleaned.txt")
-	
-}
+// 	fmt.Println("Text cleaned and written to cleaned.txt")
+
+// }
