@@ -1,3 +1,9 @@
+# VENV FILES
+/Include/*
+/Lib/*
+/Scripts/*
+
+# DEV FILES
 *.pdf
 *.txt
 *.ini

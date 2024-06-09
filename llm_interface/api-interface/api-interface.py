@@ -1,21 +1,30 @@
-import os
+from os import getenv
 from dotenv import load_dotenv
 from groq import Groq
 
-load_dotenv()
+class GroqInterface:
+    def __init__(self):
+        load_dotenv()
+        self.client = Groq(
+            api_key = getenv('GROQ_API_KEY')
+            )
+        self.model = "llama3-8b-8192"
+        self.role = "user"
 
-client = Groq(
-    api_key=os.environ.get("GroqKey"),
-)
-
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "Explain the importance of fast language models",
-        }
-    ],
-    model="llama3-8b-8192",
-)
-
-print(chat_completion.choices[0].message.content)
+    def get_response(self, message: str):
+        chat_completion = self.client.chat.completions.create(
+            messages=[
+                {
+                    "role": self.role,
+                    "content": message,
+                }
+            ],
+            model=self.model,
+        )
+        return chat_completion
+    
+    def __call__(self, message: str):
+        return self.get_response(message)
+    
+    def __repr__(self):
+        return "Type: GroqInterface\nModel: {}\nRole: {}".format(self.model, self.role)
