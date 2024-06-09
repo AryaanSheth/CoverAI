@@ -1,1 +1,4 @@
 *.pdf
+*.txt
+*.ini
+*.env
